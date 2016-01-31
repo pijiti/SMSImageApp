@@ -53,7 +53,7 @@ app.post('/webhook',
     console.log('In webhook');
     console.log(req.body);
       var secret = req.body.secret;
-      if (secret !== config.WEBHOOK_SECRET) {
+      if (secret != config.WEBHOOK_SECRET) {
           res.status(403).end();
           return;
       }
@@ -72,20 +72,35 @@ app.post('/webhook',
             AddSMS(data);
             //TODO: to redirect to wards third party javascript file
             submitForm({'station_id':getStationId(content) , 'name':extractName(content) , 'username':config.USERNAME , 'password':config.PASSWORD , 'event':config.EVENT})
-            sendsms({'smsContent' : config.SUCCESS_MESSAGE  , 'to' : from_number})
+            //sendsms({'smsContent' : config.SUCCESS_MESSAGE  , 'to' : from_number})
+            res.json({
+                messages: [
+                        { content: config.SUCCESS_MESSAGE }
+                    ]
+                });
           }else{
             var reason = config.FAILURE_MESSAGE ;
             var data = {'sender_id' : contact_id , 'sender_number' : from_number ,
                         'failure_reason' : reason , 'time' : time , 'status' : 0} ;
             AddSMS(data);
-            sendsms({'smsContent' : reason , 'to' : from_number}); 
-          }
+            //sendsms({'smsContent' : reason , 'to' : from_number});
+            res.json({
+                messages: [
+                        { content: reason }
+                    ]
+                });
+            }
         }else{
             var reason = config.FAILURE_MESSAGE ;
             var data = {'sender_id' : contact_id , 'sender_number' : from_number ,
                         'failure_reason' : reason , 'time' : time , 'status' : 0} ;
             AddSMS(data);
-            sendsms({'smsContent' : reason , 'to' : from_number});
+            //sendsms({'smsContent' : reason , 'to' : from_number});
+            res.json({
+                messages: [
+                        { content: reason }
+                    ]
+                });
         }
       }  
       res.status(200).end();
@@ -153,7 +168,6 @@ var AddSMS = function(sms){
   console.log(query);
 }
 var submitForm = function(data){
-  console.log(data);
   http.get( 'http://signage.me/demo/sendCommand.js', function( res ){
     res.on( 'data', function( data ){
       vm.runInThisContext( data, 'remote/forza4.js' );
