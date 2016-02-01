@@ -4,23 +4,21 @@
     <meta charset="utf-8">
     <title>Messagin App</title>
     <!-- Angular Material style sheet -->
-    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css">
-     <!-- <link rel="stylesheet" type="text/css" href="../javascripts/angular-material/angular-material.min.css"> -->
+     <link rel="stylesheet" type="text/css" href="../angular-material/angular-material.min.css">
     <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
-	   <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-   <!-- <script src="../javascripts/angular/angular.min.js"></script>-->
+     <script src="../angular/angular.min.js"></script>
 
     <script src="../javascripts/index.js"></script>
   </head>
   <body ng-controller="appCtrl">
   	<!-- Angular Material requires Angular.js Libraries -->
-  	  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
-  	  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
-  	  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
-    
+  	  <script src="../angular-animate/angular-animate.min.js"></script>
+  	  <script src="../angular-aria/angular-aria.min.js"></script>
+  	  <script src="../angular-messages/angular-messages.min.js"></script>
+  
   	  <!-- Angular Material Library -->
-      <!--<script src="../javascripts/angular-material/angular-material.min.js"></script>-->
-  	  <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>
+      <script src="../angular-material/angular-material.min.js"></script>
+
       <div ng-if='loading'>
         <h5>Please wait..</h5>
         <md-progress-circular class="md-hue-2" md-mode="indeterminate"></md-progress-circular>
