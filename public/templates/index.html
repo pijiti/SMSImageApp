@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html ng-app="SMS_APP">
+  <head>
+    <meta charset="utf-8">
+    <title>Messagin App</title>
+    <!-- Angular Material style sheet -->
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css">
+    <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="../javascripts/index.js"></script>
+  </head>
+  <body ng-controller="appCtrl">
+  	<!-- Angular Material requires Angular.js Libraries -->
+  	  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
+  	  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
+  	  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
+
+  	  <!-- Angular Material Library -->
+  	  <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>
+      <div ng-if='loading'>
+        <h5>Please wait..</h5>
+        <md-progress-circular class="md-hue-2" md-mode="indeterminate"></md-progress-circular>
+      </div>
+	   <div layout="row" ng-if="!loading" class="table-header">
+	   	<div flex="5">Id</div>
+	   	<div flex="10">Number</div>
+	   	<div flex="5">Status</div>
+	   	<div flex="40">Content</div>
+	   	<div flex="20">Failure Reason</div>
+	   	<div flex="10">Time</div>
+	   	<div flex="10">
+	   	</div>
+	   </div>
+      <div layout="row" ng-repeat="message in messages" ng-if="!loading" class="table-row">
+      	<div flex="5">
+      		{{message.sender_id}}
+      	</div>
+      	<div flex="10">
+      		{{message.sender_number}}
+      	</div>
+      	<div flex="5">
+      		{{message.STATUS}}
+      	</div>
+      	<div flex="40">
+      		{{message.content}}
+      	</div>
+      	<div flex="20">
+      		{{message.failure_reason}}
+      	</div>
+      	<div flex="10">
+      		{{message.time}}
+      	</div>
+      	<div flex="10">
+ 			<md-button class="md-raised" ng-click="">Print</md-button> 
+      	</div>
+      </div>
+      <md-divider></md-divider>
+
+  </body>
+</html>

@@ -1,0 +1,14 @@
+{
+	"DB_HOST"   : "localhost"	 ,
+	"DB_USER"   : "root"			 ,
+	"DB_PASSWORD": ""             , 
+	"DB_NAME" 	: "sms_service" ,
+	"USERNAME" : "Muhammad Umer" ,
+	"PASSWORD" : "hello123"		 ,
+	"STATIONS" : [25,50,74]		 ,
+	"EVENT"    : "incoming_message" ,
+	"SUCCESS_MESSAGE" : "Process Has been completed successfully" ,
+	"FAILURE_MESSAGE" : "The message does not neet specifications" ,
+	"WEBHOOK_SECRET" : "",
+	"TELERIVET_API_KEY" : ""
+}
