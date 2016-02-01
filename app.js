@@ -8,13 +8,16 @@ var config = require('./config.json');
 var http =require('http');
 var vm = require('vm');
 var concat = require('concat-stream');
+var child_process = require('child_process');
+var jsonfile = require('jsonfile');
+var fs = require('fs');
 
 var app = express();
 
 var tr = new telerivet.API(config.TELERIVET_API_KEY);
 
 var stations = config.STATIONS;
-
+var file = './data.json';
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -39,8 +42,8 @@ connection.connect(function(err){
 ///////////////////////////////ROUTERS////////////////////////////////////////////////////////////
 
 app.get('/',function(req,res){
-  submitForm('Hello');
-  // res.sendFile(path.join(__dirname+'/public/templates/index.html'));
+  console.log(__dirname);
+  res.sendFile(path.join(__dirname+'/public/templates/index.html'));
 });
 
 app.get('/allMessages',function(req,res){
@@ -67,14 +70,15 @@ app.post('/webhook',
         var contact_id = req.body.contact_id;
         var phone_id = req.body.phone_id;
         var time = req.body.time_created;
+        var obj = {'station_id':getStationId(content) , 'name':extractName(content) , 'username':config.USERNAME , 'password':config.PASSWORD , 'event':config.EVENT};
+        jsonfile.writeFileSync(file, obj);
         if(checkSAF(content)){
           if(checkstation(content)){
             var data = {'sender_id' : contact_id , 'sender_number' : from_number ,
                         'content' : content , 'time' : time , 'status' : 1} ;
             AddSMS(data);
             //TODO: to redirect to wards third party javascript file
-            submitForm({'station_id':getStationId(content) , 'name':extractName(content) , 'username':config.USERNAME , 'password':config.PASSWORD , 'event':config.EVENT})
-            //sendsms({'smsContent' : config.SUCCESS_MESSAGE  , 'to' : from_number})
+            submitForm();
             res.json({
                 messages: [
                         { content: config.SUCCESS_MESSAGE }
@@ -170,11 +174,6 @@ var AddSMS = function(sms){
   console.log(query);
 }
 var submitForm = function(data){
-  console.log(data);
-  http.get( 'http://signage.me/demo/sendCommand.js', 
-    function(res) {
-        res.setEncoding('utf8');
-        res.pipe(concat({ encoding: 'string' }, function(remoteSrc) {
-          vm.runInThisContext(remoteSrc, 'remote_modules/hello.js');
-        }));
+ var worker_process = child_process.fork("nightwatch.js");
+
 }
