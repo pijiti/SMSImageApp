@@ -38,8 +38,7 @@ connection.connect(function(err){
 ///////////////////////////////ROUTERS////////////////////////////////////////////////////////////
 
 app.get('/',function(req,res){
-  submitForm("");
-  //res.sendFile(path.join(__dirname+'/public/templates/index.html'));
+  res.sendFile(path.join(__dirname+'/public/templates/index.html'));
 });
 
 app.get('/allMessages',function(req,res){
