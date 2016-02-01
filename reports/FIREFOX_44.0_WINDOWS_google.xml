@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites errors="0"
+            failures="1"
+            tests="1">
+
+  <testsuite name="google"
+    errors="0" failures="1" hostname="" id="" package="google" skipped="0"
+    tests="1" time="15.04" timestamp="Mon, 01 Feb 2016 11:39:36 GMT">
+  
+    <testcase name="Demo test Google" time="15.04" assertions="2">
+
+      <failure message="Timed out while waiting for element &lt;button[name=btnG]&gt; to be present for 1000 milliseconds.">    at Object.module.exports.Demo test Google (E:\express-generator\myapp\tests\google.js:11:8)
+    at Module.call (E:\express-generator\myapp\node_modules\nightwatch\lib\runner\module.js:63:34)
+    at E:\express-generator\myapp\node_modules\nightwatch\lib\runner\testcase.js:97:29
+    at _fulfilled (E:\express-generator\myapp\node_modules\q\q.js:834:54)
+    at self.promiseDispatch.done (E:\express-generator\myapp\node_modules\q\q.js:863:30)
+    at Promise.promise.promiseDispatch (E:\express-generator\myapp\node_modules\q\q.js:796:13)
+    at E:\express-generator\myapp\node_modules\q\q.js:556:49
+    at runSingle (E:\express-generator\myapp\node_modules\q\q.js:137:13)
+    at flush (E:\express-generator\myapp\node_modules\q\q.js:125:13)
+    at doNTCallback0 (node.js:428:9)</failure>
+
+    
+    </testcase>
+  
+  
+  </testsuite>
+</testsuites>

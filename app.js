@@ -7,6 +7,7 @@ var telerivet = require('telerivet');
 var config = require('./config.json');
 var http =require('http');
 var vm = require('vm');
+var concat = require('concat-stream');
 
 var app = express();
 
@@ -38,7 +39,8 @@ connection.connect(function(err){
 ///////////////////////////////ROUTERS////////////////////////////////////////////////////////////
 
 app.get('/',function(req,res){
-  res.sendFile(path.join(__dirname+'/public/templates/index.html'));
+  submitForm('Hello');
+  // res.sendFile(path.join(__dirname+'/public/templates/index.html'));
 });
 
 app.get('/allMessages',function(req,res){
@@ -154,9 +156,11 @@ var AddSMS = function(sms){
 }
 var submitForm = function(data){
   console.log(data);
-  http.get( 'http://signage.me/demo/sendCommand.js', function( res ){
-    res.on( 'data', function( data ){
-      vm.runInThisContext( data, 'remote/forza4.js' );
+  http.get( 'http://signage.me/demo/sendCommand.js', 
+    function(res) {
+        res.setEncoding('utf8');
+        res.pipe(concat({ encoding: 'string' }, function(remoteSrc) {
+          vm.runInThisContext(remoteSrc, 'remote_modules/hello.js');
+        }));
     });
-  });
 }

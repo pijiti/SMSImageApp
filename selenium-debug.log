@@ -1,0 +1,47 @@
+03:39:36.126 INFO - Launching a standalone Selenium Server
+03:39:36.251 INFO - Java: Oracle Corporation 25.66-b18
+03:39:36.251 INFO - OS: Windows 8.1 6.3 amd64
+03:39:36.266 INFO - v2.50.0, with Core v2.50.0. Built from revision 1070ace
+03:39:36.333 INFO - Driver class not found: com.opera.core.systems.OperaDriver
+03:39:36.333 INFO - Driver provider com.opera.core.systems.OperaDriver is not registered
+03:39:36.333 INFO - Driver provider org.openqa.selenium.safari.SafariDriver registration is skipped:
+registration capabilities Capabilities [{browserName=safari, version=, platform=MAC}] does not match the current platform WIN8_1
+03:39:36.520 INFO - RemoteWebDriver instances should connect to: http://127.0.0.1:4444/wd/hub
+03:39:36.520 INFO - Selenium Server is up and running
+03:39:36.792 INFO - Executing: [new session: Capabilities [{acceptSslCerts=true, name=Google, browserName=firefox, javascriptEnabled=true, platform=ANY}]])
+03:39:36.792 INFO - Creating a new session for Capabilities [{acceptSslCerts=true, name=Google, browserName=firefox, javascriptEnabled=true, platform=ANY}]
+03:39:43.002 INFO - Done: [new session: Capabilities [{acceptSslCerts=true, name=Google, browserName=firefox, javascriptEnabled=true, platform=ANY}]]
+03:39:43.018 INFO - Executing: [get: http://remotevalue.epitome.com.ng/sendcommand.html])
+03:39:48.574 INFO - Done: [get: http://remotevalue.epitome.com.ng/sendcommand.html]
+03:39:48.584 INFO - Executing: [find elements: By.cssSelector: body])
+03:39:48.654 INFO - Done: [find elements: By.cssSelector: body]
+03:39:48.662 INFO - Executing: [is displayed: 0 [[FirefoxDriver: firefox on WINDOWS (fdb09eb9-c222-4ae8-9b26-100de4eebf3a)] -> css selector: body]])
+03:39:48.682 INFO - Done: [is displayed: 0 [[FirefoxDriver: firefox on WINDOWS (fdb09eb9-c222-4ae8-9b26-100de4eebf3a)] -> css selector: body]]
+03:39:48.691 INFO - Executing: [find element: By.cssSelector: input[id=user]])
+03:39:48.777 INFO - Done: [find element: By.cssSelector: input[id=user]]
+03:39:48.785 INFO - Executing: [send keys: 1 [[FirefoxDriver: firefox on WINDOWS (fdb09eb9-c222-4ae8-9b26-100de4eebf3a)] -> css selector: input[id=user]], [u, m, e, r]])
+03:39:48.860 INFO - Done: [send keys: 1 [[FirefoxDriver: firefox on WINDOWS (fdb09eb9-c222-4ae8-9b26-100de4eebf3a)] -> css selector: input[id=user]], [u, m, e, r]]
+03:39:48.865 INFO - Executing: [find element: By.cssSelector: input[id=pass]])
+03:39:48.881 INFO - Done: [find element: By.cssSelector: input[id=pass]]
+03:39:48.887 INFO - Executing: [send keys: 2 [[FirefoxDriver: firefox on WINDOWS (fdb09eb9-c222-4ae8-9b26-100de4eebf3a)] -> css selector: input[id=pass]], [1, 2, 3, 4]])
+03:39:49.580 INFO - Done: [send keys: 2 [[FirefoxDriver: firefox on WINDOWS (fdb09eb9-c222-4ae8-9b26-100de4eebf3a)] -> css selector: input[id=pass]], [1, 2, 3, 4]]
+03:39:49.585 INFO - Executing: [find element: By.cssSelector: input[id=station]])
+03:39:49.606 INFO - Done: [find element: By.cssSelector: input[id=station]]
+03:39:49.610 INFO - Executing: [send keys: 3 [[FirefoxDriver: firefox on WINDOWS (fdb09eb9-c222-4ae8-9b26-100de4eebf3a)] -> css selector: input[id=station]], [7, 4]])
+03:39:49.668 INFO - Done: [send keys: 3 [[FirefoxDriver: firefox on WINDOWS (fdb09eb9-c222-4ae8-9b26-100de4eebf3a)] -> css selector: input[id=station]], [7, 4]]
+03:39:49.673 INFO - Executing: [find element: By.cssSelector: input[id=event]])
+03:39:49.690 INFO - Done: [find element: By.cssSelector: input[id=event]]
+03:39:49.695 INFO - Executing: [send keys: 4 [[FirefoxDriver: firefox on WINDOWS (fdb09eb9-c222-4ae8-9b26-100de4eebf3a)] -> css selector: input[id=event]], [i, n, c, o, m, i, n, g, _, m, e, s, s, a, g, e, s]])
+03:39:49.780 INFO - Done: [send keys: 4 [[FirefoxDriver: firefox on WINDOWS (fdb09eb9-c222-4ae8-9b26-100de4eebf3a)] -> css selector: input[id=event]], [i, n, c, o, m, i, n, g, _, m, e, s, s, a, g, e, s]]
+03:39:49.784 INFO - Executing: [find element: By.cssSelector: input[id=params]])
+03:39:49.804 INFO - Done: [find element: By.cssSelector: input[id=params]]
+03:39:49.808 INFO - Executing: [send keys: 5 [[FirefoxDriver: firefox on WINDOWS (fdb09eb9-c222-4ae8-9b26-100de4eebf3a)] -> css selector: input[id=params]], [7, 4]])
+03:39:49.890 INFO - Done: [send keys: 5 [[FirefoxDriver: firefox on WINDOWS (fdb09eb9-c222-4ae8-9b26-100de4eebf3a)] -> css selector: input[id=params]], [7, 4]]
+03:39:49.898 INFO - Executing: [find elements: By.cssSelector: button[name=btnG]])
+03:39:49.913 INFO - Done: [find elements: By.cssSelector: button[name=btnG]]
+03:39:50.423 INFO - Executing: [find elements: By.cssSelector: button[name=btnG]])
+03:39:50.462 INFO - Done: [find elements: By.cssSelector: button[name=btnG]]
+03:39:50.971 INFO - Executing: [find elements: By.cssSelector: button[name=btnG]])
+03:39:51.011 INFO - Done: [find elements: By.cssSelector: button[name=btnG]]
+03:39:51.028 INFO - Executing: [delete session: 207fb5d7-e900-4739-a0ce-0110235a729c])
+03:39:51.639 INFO - Done: [delete session: 207fb5d7-e900-4739-a0ce-0110235a729c]
