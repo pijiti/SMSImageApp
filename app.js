@@ -11,6 +11,7 @@ var concat = require('concat-stream');
 var child_process = require('child_process');
 var jsonfile = require('jsonfile');
 var fs = require('fs');
+var mongoose = require('mongoose');
 
 var app = express();
 
@@ -25,19 +26,46 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 ////////////////////////////DB CONNECTION/////////////////////////////////////////////////////////
-var connection = mysql.createConnection({
-  host     : config.DB_HOST,
-  user     : config.DB_USER,
-  password : config.DB_PASSWORD
-});
+// var connection = mysql.createConnection({
+//   host     : config.DB_HOST,
+//   user     : config.DB_USER,
+//   password : config.DB_PASSWORD
+// });
 
-connection.connect(function(err){
-  if(err) throw err;
-  console.log('You are successfully connected to DB');
-  connection.query('USE '+config.DB_NAME);
-    console.log('You are successfully connected to test database');
+// connection.connect(function(err){
+//   if(err) throw err;
+//   console.log('You are successfully connected to DB');
+//   connection.query('USE '+config.DB_NAME);
+//     console.log('You are successfully connected to test database');
 
+// });
+
+mongoose.connect(config.DB_URI);
+
+// CONNECTION EVENTS
+// When successfully connected
+mongoose.connection.on('connected', function () {  
+  console.log('Mongoose default connection opened');
+}); 
+
+// If the connection throws an error
+mongoose.connection.on('error',function (err) {  
+  console.log('Mongoose default connection error: ' + err);
+}); 
+
+// When the connection is disconnected
+mongoose.connection.on('disconnected', function () {  
+  console.log('Mongoose default connection disconnected'); 
 });
+////////////////////////////////////MONGODB SCHEMA///////////////////////////////////////////////////////////
+var Schema = mongoose.Schema;
+var messages = new Schema({sender_id:String , 
+                            sender_number: String ,
+                            content:String ,
+                            time:String ,
+                            status:Boolean,
+                            failure_reason:String});
+var message = mongoose.model('message', messages);
 
 ///////////////////////////////ROUTERS////////////////////////////////////////////////////////////
 
@@ -48,8 +76,15 @@ app.get('/',function(req,res){
 
 app.get('/allMessages',function(req,res){
   console.log('alldata');
-  connection.query('select * from messages' , function(err , rows){
-    res.send(rows);
+  // connection.query('select * from messages' , function(err , rows){
+  //   res.send(rows);
+  // });
+  message.find(function(err,data){
+    if(err) console.log(err);
+    else {
+      console.log(data);
+      res.send(data);
+    }
   });
 });
 
@@ -89,7 +124,6 @@ app.post('/webhook',
             var data = {'sender_id' : contact_id , 'sender_number' : from_number ,
                         'failure_reason' : reason , 'time' : time , 'status' : 0} ;
             AddSMS(data);
-            //sendsms({'smsContent' : reason , 'to' : from_number});
             res.json({
                 messages: [
                         { content: reason }
@@ -166,14 +200,31 @@ var getStationId = function(sms){
   return id;
 }
 var AddSMS = function(sms){
-  console.log(sms);
-  var query = connection.query("INSERT INTO messages SET ?" ,sms,
-    function(err,rows){
-      if(err) throw err;
-    });
-  console.log(query);
+  // console.log(sms);
+  // var query = connection.query("INSERT INTO messages SET ?" ,sms,
+  //   function(err,rows){
+  //     if(err) throw err;
+  //   });
+  // console.log(query);
+  var msg = new message(sms);
+  msg.save(function(err,data){
+    if(err) console.log(err);
+    else console.log('saved: ',data);
+  });
 }
 var submitForm = function(data){
  var worker_process = child_process.fork("nightwatch.js");
 
+}
+var checkMongo = function(){
+  console.log('Inserting Data into MongoDB');
+  var m = new message({sender_id:'22' ,
+                    sender_number:'03215991429' ,
+                    content:'Hello!..' ,
+                    failure_reason:'Ambigous',
+                    status:1});
+  m.save(function(err , data){
+    if (err) console.log(err);
+    else console.log('Saved : ', data );
+  });
 }
