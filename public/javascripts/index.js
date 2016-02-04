@@ -1,8 +1,8 @@
 var app = angular.module('SMS_APP', ['ngMaterial']);
-app.controller('appCtrl' , function($scope , $http , $mdDialog){
+app.controller('appCtrl' , function($scope , $http , $mdDialog , $location){
 
     $scope.loading = true;
-    $http.get('http://localhost:3000/allmessages').then(function(response){
+    $http.get('/allmessages').then(function(response){
     	$scope.loading = false;
         if(response && response.data){
             $scope.messages = response.data;
