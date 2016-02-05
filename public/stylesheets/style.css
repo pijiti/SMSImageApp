@@ -11,11 +11,11 @@ a {
 	border-width: 5px;
 }
 .table-header{
-	height: 15%;
+	height: 10%;
 	color: #ffffff;
-	background-color: rgb(16,108,200);
+	background-color: #fe001a;
 	font-weight: bold;
-	font-size: 22px;
+	font-size: 	16px;
 	text-align: center;
 	padding-top: 25px;
 }
