@@ -57,7 +57,7 @@
       	</div>
         <md-divider></md-divider>
       	<div flex="10">
-      		{{message.time}}
+      		{{message.time * 1000 | date:'yyyy-MM-dd HH:mm:ss Z'}}
       	</div>
         <md-divider></md-divider>
       	<div flex="20">
