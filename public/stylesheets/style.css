@@ -28,3 +28,7 @@ a {
 .right{
 	float: right;
 }
+
+.red{
+	background-color: #fe001a !important;
+}
