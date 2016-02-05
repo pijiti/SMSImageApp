@@ -1,17 +1,18 @@
 var express = require('express');
-var path = require('path');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var mysql = require('mysql');
 var telerivet = require('telerivet');
 var config = require('./config.json');
 var http =require('http');
 var vm = require('vm');
-var concat = require('concat-stream');
-var child_process = require('child_process');
 var jsonfile = require('jsonfile');
 var fs = require('fs');
 var mongoose = require('mongoose');
+
+var path = require('path')
+var childProcess = require('child_process')
+var phantomjs = require('phantomjs-prebuilt')
+var binPath = phantomjs.path
 
 var app = express();
 
@@ -70,19 +71,14 @@ var message = mongoose.model('message', messages);
 ///////////////////////////////ROUTERS////////////////////////////////////////////////////////////
 
 app.get('/',function(req,res){
-  console.log(__dirname);
   res.sendFile(path.join(__dirname+'/public/templates/index.html'));
 });
 
 app.get('/allMessages',function(req,res){
-  console.log('alldata');
-  // connection.query('select * from messages' , function(err , rows){
-  //   res.send(rows);
-  // });
+  
   message.find(function(err,data){
     if(err) console.log(err);
     else {
-      console.log(data);
       res.send(data);
     }
   });
@@ -113,7 +109,7 @@ app.post('/webhook',
                         'content' : content , 'time' : time , 'status' : 1} ;
             AddSMS(data);
             //TODO: to redirect to wards third party javascript file
-            submitForm();
+            submitForm(data);
             res.json({
                 messages: [
                         { content: config.SUCCESS_MESSAGE }
@@ -157,7 +153,6 @@ app.listen(process.env.PORT || 3000, function () {
 
 
 var checkSAF = function(sms){
-  console.log(sms);
   key = sms.split(" ")[0] ;
   if(key == "SAF"){
     return 1;
@@ -166,7 +161,6 @@ var checkSAF = function(sms){
   }
 }
 var checkstation = function(sms){
-  console.log(sms);
   key = sms.split(" ")[1] ;
   if(stations.indexOf(parseInt(key)) > -1){
     console.log('station exists!..');
@@ -213,11 +207,28 @@ var AddSMS = function(sms){
   });
 }
 var submitForm = function(data){
- var worker_process = child_process.fork("nightwatch.js");
+    console.log(data)
+    var shareFeelArgs = [
+        path.join(__dirname, 'phantomjs-sharefeel.js'),
+        data.content
+    ]
 
+    var shareFeel = childProcess.execFile(binPath, shareFeelArgs, function(err, stdout, stderr) {
+      
+    })
+
+    shareFeel.stdout.on('data', function(data) {
+        console.log('stdout: ' + data);
+    });
+    shareFeel.stderr.on('data', function(data) {
+        console.log('stderr: ' + data);
+    });
+    shareFeel.on('close', function(code) {
+        console.log('closing code: ' + code);
+    });
 }
 var checkMongo = function(){
-  console.log('Inserting Data into MongoDB');
+
   var m = new message({sender_id:'22' ,
                     sender_number:'03215991429' ,
                     content:'Hello!..' ,
