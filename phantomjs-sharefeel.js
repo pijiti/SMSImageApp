@@ -18,6 +18,7 @@ page.open('http://remotevalue.epitome.com.ng/shareAFeeling.html', function(statu
             if(input){
                 input.value = args[1];
             }
+            document.getElementById('btn1').click();
         } , args);
         setTimeout(function(){
                 console.log('rendering page')

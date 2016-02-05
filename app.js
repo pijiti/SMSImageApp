@@ -231,7 +231,7 @@ var submitForm = function(data){
 
     var sendCommandArgs = [
         path.join(__dirname, 'phantomjs-sendcommand.js'),
-        config.USERNAME , config.PASSWORD , data.station_id , config.EVENT , data.content
+        config.USERNAME , config.PASSWORD , data.station_id , config.EVENT , data.name
     ]
 
     var sendCommand = childProcess.execFile(binPath, sendCommandArgs, function(err, stdout, stderr) {

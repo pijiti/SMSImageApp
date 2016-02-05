@@ -37,6 +37,8 @@ page.open('http://remotevalue.epitome.com.ng/sendcommand.html', function(status)
             if(params){
                 params.value = args[5];
             }
+
+            document.getElementById('go').click();
         } , args);
         setTimeout(function(){
                 console.log('rendering page')
