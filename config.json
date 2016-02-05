@@ -9,7 +9,7 @@
 	"EVENT"    : "incoming_message" ,
 	"SUCCESS_MESSAGE" : "Process Has been completed successfully" ,
 	"FAILURE_MESSAGE" : "The message does not neet specifications" ,
-	"WEBHOOK_SECRET" : "MQRXKNQ4UHH76L4LN9KZDG6E7Q7FCEWX",
+	"WEBHOOK_SECRET" : "Q2LXQFD7FGTNU747EE2ZR4FT9R627AQW",
 	"TELERIVET_API_KEY" : "",
-	"DB_URI":"mongodb://root:root@ds055575.mongolab.com:55575/sms_service"
+	"DB_URI":"mongodb://root:U1299526@ds059185.mongolab.com:59185/sms_service"
 }
