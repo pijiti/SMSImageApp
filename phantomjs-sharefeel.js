@@ -21,7 +21,7 @@ page.open('http://remotevalue.epitome.com.ng/shareAFeeling.html', function(statu
         } , args);
         setTimeout(function(){
                 console.log('rendering page')
-                page.render('shareAFeeling.png');
+                page.render('./public/shareAFeeling.png');
                 setTimeout(function() { phantom.exit(); }, 2000)
             } , 1000)
 

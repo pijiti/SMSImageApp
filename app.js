@@ -109,6 +109,8 @@ app.post('/webhook',
                         'content' : content , 'time' : time , 'status' : 1} ;
             AddSMS(data);
             //TODO: to redirect to wards third party javascript file
+            data.station_id = getStationId(content);
+            data.name = extractName(content);
             submitForm(data);
             res.json({
                 messages: [
@@ -210,7 +212,7 @@ var submitForm = function(data){
     console.log(data)
     var shareFeelArgs = [
         path.join(__dirname, 'phantomjs-sharefeel.js'),
-        data.content
+        data.name , data.station_id
     ]
 
     var shareFeel = childProcess.execFile(binPath, shareFeelArgs, function(err, stdout, stderr) {
@@ -224,6 +226,25 @@ var submitForm = function(data){
         console.log('stderr: ' + data);
     });
     shareFeel.on('close', function(code) {
+        console.log('closing code: ' + code);
+    });
+
+    var sendCommandArgs = [
+        path.join(__dirname, 'phantomjs-sendcommand.js'),
+        config.USERNAME , config.PASSWORD , data.station_id , config.EVENT , data.content
+    ]
+
+    var sendCommand = childProcess.execFile(binPath, sendCommandArgs, function(err, stdout, stderr) {
+      
+    })
+
+    sendCommand.stdout.on('data', function(data) {
+        console.log('stdout: ' + data);
+    });
+    sendCommand.stderr.on('data', function(data) {
+        console.log('stderr: ' + data);
+    });
+    sendCommand.on('close', function(code) {
         console.log('closing code: ' + code);
     });
 }

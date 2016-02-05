@@ -40,7 +40,7 @@ page.open('http://remotevalue.epitome.com.ng/sendcommand.html', function(status)
         } , args);
         setTimeout(function(){
                 console.log('rendering page')
-                page.render('sendcommand.png');
+                page.render('./public/sendcommand.png');
                 setTimeout(function() { phantom.exit(); }, 2000)
             } , 1000)
 
