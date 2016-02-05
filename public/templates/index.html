@@ -2,7 +2,7 @@
 <html ng-app="SMS_APP">
   <head>
     <meta charset="utf-8">
-    <title>Messagin App</title>
+    <title>Messaging App</title>
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
     <!-- Angular Material style sheet -->
@@ -26,38 +26,45 @@
         <md-progress-circular class="md-hue-2" md-mode="indeterminate"></md-progress-circular>
       </div>
 	   <div layout="row" ng-if="!loading" class="table-header">
-	   	<div flex="5">Id</div>
-	   	<div flex="10">Number</div>
-	   	<div flex="5">Status</div>
-	   	<div flex="40">Content</div>
-	   	<div flex="20">Failure Reason</div>
+	   	<div flex="15">Id</div>
+	   	<div flex="15">Number</div>
+	   	<div flex="10">Status</div>
+	   	<div flex="30">Content</div>
+	   	<div flex="10">Failure Reason</div>
 	   	<div flex="10">Time</div>
-	   	<div flex="10">
-	   	</div>
+	   	<div flex="20"> 	</div>
 	   </div>
-      <div layout="row" ng-repeat="message in messages" ng-if="!loading" class="table-row">
-      	<div flex="5">
+    <div ng-repeat="message in messages" ng-if="!loading" >
+        <div layout="row" layout-align="center center" class="table-row">
+      	<div flex="15">
       		{{message.sender_id}}
       	</div>
-      	<div flex="10">
+        <md-divider></md-divider>
+      	<div flex="15">
       		{{message.sender_number}}
       	</div>
-      	<div flex="5">
-      		{{message.STATUS}}
+        <md-divider></md-divider>
+      	<div flex="10">
+      		{{message.status ? 'Success' : 'Fail'}}
       	</div>
-      	<div flex="40">
+        <md-divider></md-divider>
+      	<div flex="30">
       		{{message.content}}
       	</div>
-      	<div flex="20">
+        <md-divider></md-divider>
+      	<div flex="10">
       		{{message.failure_reason}}
       	</div>
+        <md-divider></md-divider>
       	<div flex="10">
       		{{message.time}}
       	</div>
-      	<div flex="10">
- 			    <md-button class="md-raised" ng-click="print(message)">Print</md-button> 
+        <md-divider></md-divider>
+      	<div flex="20">
+ 			<md-button class="md-raised" ng-click="print(message)">Print</md-button> 
       	</div>
       </div>
       <md-divider></md-divider>
+      </div>
   </body>
 </html>
