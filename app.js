@@ -74,6 +74,17 @@ app.get('/',function(req,res){
   res.sendFile(path.join(__dirname+'/public/templates/index.html'));
 });
 
+app.delete('/sms/:id',function(req,res){
+  message.remove({ _id: req.params.id }, function(err) {
+    if (err) {
+      res.status(500).end()
+    }
+    else {
+      res.status(200).end();
+    }
+  });
+});
+
 app.get('/allMessages',function(req,res){
   
   message.find(function(err,data){
@@ -87,7 +98,7 @@ app.get('/allMessages',function(req,res){
 app.post('/webhook',
    function(req, res) {
     console.log('In webhook');
-    console.log(req.body);
+    //console.log(req.body);
       var secret = req.body.secret;
       if (secret != config.WEBHOOK_SECRET) {
           res.status(403).end();
@@ -106,7 +117,7 @@ app.post('/webhook',
         if(checkSAF(content)){
           if(checkstation(content)){
             var data = {'sender_id' : contact_id , 'sender_number' : from_number ,
-                        'content' : content , 'time' : time , 'status' : 1} ;
+                        'content' : extractName(content) , 'time' : time , 'status' : 1} ;
             AddSMS(data);
             //TODO: to redirect to wards third party javascript file
             data.station_id = getStationId(content);
@@ -120,7 +131,7 @@ app.post('/webhook',
           }else{
             var reason = config.FAILURE_MESSAGE ;
             var data = {'sender_id' : contact_id , 'sender_number' : from_number ,
-                        'failure_reason' : reason , 'time' : time , 'status' : 0} ;
+                        'failure_reason' : reason , 'time' : time , 'status' : 0 , 'content' : extractName(content)} ;
             AddSMS(data);
             res.json({
                 messages: [

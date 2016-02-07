@@ -25,7 +25,18 @@
         <h5>Please wait..</h5>
         <md-progress-circular class="md-hue-2" md-mode="indeterminate"></md-progress-circular>
       </div>
-	   <div layout="row" ng-if="!loading" class="table-header">
+      <div ng-if='!loading' layout="row" layout-align="center center">
+        <div flex="20">
+          <p style="text-align:right">Total Messages : {{messages.length}}</p>
+        </div>
+        <div flex="30">
+          
+        </div>
+        <div flex="50">
+          <input ng-model="search.query" placeholder="Search.." type="text">
+        </div>
+      </div>
+      <div layout="row" ng-if="!loading" class="table-header">
 	   	<div flex="15">Id</div>
 	   	<div flex="15">Number</div>
 	   	<div flex="10">Status</div>
@@ -34,10 +45,11 @@
 	   	<div flex="10">Time</div>
 	   	<div flex="20"> 	</div>
 	   </div>
-    <div ng-repeat="message in messages" ng-if="!loading" >
+     <pre>{{query}}</pre>
+    <div ng-repeat="message in messages | filter : search.query" ng-if="!loading" >
         <div layout="row" layout-align="center center" class="table-row">
       	<div flex="15">
-      		{{message.sender_id}}
+      		{{message._id}}
       	</div>
         <md-divider></md-divider>
       	<div flex="15">
@@ -60,9 +72,12 @@
       		{{message.time * 1000 | date:'yyyy-MM-dd HH:mm:ss Z'}}
       	</div>
         <md-divider></md-divider>
-      	<div flex="20">
- 			<md-button class="md-raised red" ng-click="print(message)">Print</md-button> 
+      	<div flex="10">
+ 			    <md-button class="md-raised red" ng-click="print(message)">Print</md-button> 
       	</div>
+        <div flex="10">
+          <md-button class="md-raised red" ng-click="delete(message)">Delete</md-button> 
+        </div>
       </div>
       <md-divider></md-divider>
       </div>

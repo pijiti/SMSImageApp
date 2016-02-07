@@ -5,7 +5,7 @@ var binPath = phantomjs.path
 
 var childArgs = [
   path.join(__dirname, 'phantomjs-sharefeel.js'),
-  ''
+  'ahmed'
 ]
  
 var child = childProcess.execFile(binPath, childArgs, function(err, stdout, stderr) {

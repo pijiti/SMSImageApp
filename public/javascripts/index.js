@@ -2,6 +2,7 @@ var app = angular.module('SMS_APP', ['ngMaterial']);
 app.controller('appCtrl' , function($scope , $http , $mdDialog , $location){
 
     $scope.loading = true;
+    $scope.search = {query : ''}
     $http.get('/allmessages').then(function(response){
     	$scope.loading = false;
         if(response && response.data){
@@ -22,6 +23,14 @@ app.controller('appCtrl' , function($scope , $http , $mdDialog , $location){
                 }
             } ,
             clickOutsideToClose:true
+        });
+    }
+
+    $scope.delete = function(sms){
+        $http.delete('/sms/' + sms._id).then(function(response){
+            var index = $scope.messages.indexOf(sms);
+
+            $scope.messages.splice(index , 1);
         });
     }
 });

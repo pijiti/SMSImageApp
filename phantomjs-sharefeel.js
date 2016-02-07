@@ -8,9 +8,9 @@ if (args.length <= 1) {
   
 }
 
-page.onResourceReceived = function(response) {
-   console.log('Response (#' + response.id + ', stage "' + response.stage + '"): ' + JSON.stringify(response));
-};
+// page.onResourceReceived = function(response) {
+//    console.log('Response (#' + response.id + ', stage "' + response.stage + '"): ' + JSON.stringify(response));
+// };
 
 page.open('http://remotevalue.epitome.com.ng/shareAFeeling.html', function(status) {
     if (status !== 'success') {
