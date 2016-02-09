@@ -40,7 +40,8 @@
 	   	<div flex="15">Id</div>
 	   	<div flex="15">Number</div>
 	   	<div flex="10">Status</div>
-	   	<div flex="30">Content</div>
+	   	<div flex="20">Content</div>
+      <div flex="10">Displayed Content</div>
 	   	<div flex="10">Failure Reason</div>
 	   	<div flex="10">Time</div>
 	   	<div flex="20"> 	</div>
@@ -60,9 +61,13 @@
       		{{message.status ? 'Success' : 'Fail'}}
       	</div>
         <md-divider></md-divider>
-      	<div flex="30">
+      	<div flex="20">
       		{{message.content}}
       	</div>
+        <md-divider></md-divider>
+        <div flex="10">
+          {{message.displayed_content}}
+        </div>
         <md-divider></md-divider>
       	<div flex="10">
       		{{message.failure_reason}}

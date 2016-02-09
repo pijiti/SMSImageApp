@@ -7,6 +7,7 @@
 	"PASSWORD" : "hello123"		 ,
 	"STATIONS" : [56,57,58,59,60,61,62]		 ,
 	"EVENT"    : "incoming_message" ,
+	"COMPAIGN_CODE" : "SAF1",
 	"SUCCESS_MESSAGE" : "Process Has been completed successfully" ,
 	"FAILURE_MESSAGE" : "The message does not neet specifications" ,
 	"WEBHOOK_SECRET" : "Q2LXQFD7FGTNU747EE2ZR4FT9R627AQW",

@@ -63,6 +63,7 @@ var Schema = mongoose.Schema;
 var messages = new Schema({sender_id:String , 
                             sender_number: String ,
                             content:String ,
+                            displayed_content : String,
                             time:String ,
                             status:Boolean,
                             failure_reason:String});
@@ -112,12 +113,12 @@ app.post('/webhook',
         var contact_id = req.body.contact_id;
         var phone_id = req.body.phone_id;
         var time = req.body.time_created;
-        var obj = {'station_id':getStationId(content) , 'name':extractName(content) , 'username':config.USERNAME , 'password':config.PASSWORD , 'event':config.EVENT};
-        jsonfile.writeFileSync(file, obj);
+        // var obj = {'station_id':getStationId(content) , 'name':extractName(content) , 'username':config.USERNAME , 'password':config.PASSWORD , 'event':config.EVENT};
+        // jsonfile.writeFileSync(file, obj);
         if(checkSAF(content)){
           if(checkstation(content)){
             var data = {'sender_id' : contact_id , 'sender_number' : from_number ,
-                        'content' : extractName(content) , 'time' : time , 'status' : 1} ;
+                        'content' : content , 'displayed_content' : extractName(content) , 'time' : time , 'status' : 1} ;
             AddSMS(data);
             //TODO: to redirect to wards third party javascript file
             data.station_id = getStationId(content);
@@ -131,7 +132,7 @@ app.post('/webhook',
           }else{
             var reason = config.FAILURE_MESSAGE ;
             var data = {'sender_id' : contact_id , 'sender_number' : from_number ,
-                        'failure_reason' : reason , 'time' : time , 'status' : 0 , 'content' : extractName(content)} ;
+                        'failure_reason' : reason , 'time' : time , 'status' : 0 , 'content' : content} ;
             AddSMS(data);
             res.json({
                 messages: [
@@ -142,7 +143,7 @@ app.post('/webhook',
         }else{
             var reason = config.FAILURE_MESSAGE ;
             var data = {'sender_id' : contact_id , 'sender_number' : from_number ,
-                        'failure_reason' : reason , 'time' : time , 'status' : 0} ;
+                        'failure_reason' : reason , 'time' : time , 'content' : content, 'status' : 0} ;
             AddSMS(data);
             //sendsms({'smsContent' : reason , 'to' : from_number});
             res.json({
@@ -167,7 +168,7 @@ app.listen(process.env.PORT || 3000, function () {
 
 var checkSAF = function(sms){
   key = sms.split(" ")[0] ;
-  if(key == "SAF"){
+  if(key && config.COMPAIGN_CODE && key.toLowerCase() == config.COMPAIGN_CODE.toLowerCase()){
     return 1;
   }else{
     return 0;
