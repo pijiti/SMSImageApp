@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html ng-app="SMS_APP">
+  <head>
+    <meta charset="utf-8">
+    <title>Messaging App</title>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <!-- Angular Material style sheet -->
+     <link rel="stylesheet" type="text/css" href="../angular-material/angular-material.min.css">
+    <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
+     <script src="../angular/angular.min.js"></script>
+
+  </head>
+  <body ng-controller="uploadCtrl">
+  	<!-- Angular Material requires Angular.js Libraries -->
+  	  <script src="../angular-animate/angular-animate.min.js"></script>
+  	  <script src="../angular-aria/angular-aria.min.js"></script>
+  	  <script src="../angular-messages/angular-messages.min.js"></script>
+  
+  	  <!-- Angular Material Library -->
+      <script src="../angular-material/angular-material.min.js"></script>
+      <div ng-if='loading'>
+        <h5>Please wait..</h5>
+        <md-progress-circular class="md-hue-2" md-mode="indeterminate"></md-progress-circular>
+      </div>
+      <div layout="row" ng-if="!loading" class="table-header">
+        <div flex="15">Id</div>
+        <div flex="15">Name</div>
+        <div flex="50">Image</div>
+        <div flex="20">   </div>
+     </div>
+      <div ng-repeat="image in images" ng-if="!loading" >
+        <div layout="row" layout-align="center center" class="table-row">
+          <div flex="15">{{image._id}}</div>
+          <div flex="15">{{image.name}}</div>
+          <div flex="50"><img style="width:100px;" ng-if="image.url" ngf-thumbnail="image.url"/></div>
+          <div flex="20">
+              <md-button class="md-raised red" ng-click="delete(image)">Delete</md-button> 
+          </div>
+        </div>
+      </div>
+      <hr>
+      <form  ng-controller="uploadCtrl as up" name="up.upload_form">
+            <input 
+               type="file" 
+               ngf-select 
+               ng-model="up.file" 
+               name="file" 
+               ngf-pattern="'image/*'"
+               accept="image/*" 
+               ngf-max-size="20MB" 
+               />
+            Image thumbnail: <img style="width:100px;" ng-if="up.file" ngf-thumbnail="up.file"/>
+            <md-button type="submit" ng-click="up.submit()" class="md-raised red">Upload</md-button> 
+        </form>
+      <script src="../javascripts/index.js"></script>
+      <script src="../javascripts/ng-file-upload-shim.js"></script>
+      <script src="../javascripts/ng-file-upload.js"></script>
+  </body>
+</html>

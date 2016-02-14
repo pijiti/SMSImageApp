@@ -8,6 +8,7 @@ var vm = require('vm');
 var jsonfile = require('jsonfile');
 var fs = require('fs');
 var mongoose = require('mongoose');
+var aws = require('aws-sdk');
 
 var path = require('path')
 var childProcess = require('child_process')
@@ -26,20 +27,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-////////////////////////////DB CONNECTION/////////////////////////////////////////////////////////
-// var connection = mysql.createConnection({
-//   host     : config.DB_HOST,
-//   user     : config.DB_USER,
-//   password : config.DB_PASSWORD
-// });
-
-// connection.connect(function(err){
-//   if(err) throw err;
-//   console.log('You are successfully connected to DB');
-//   connection.query('USE '+config.DB_NAME);
-//     console.log('You are successfully connected to test database');
-
-// });
+var AWS_ACCESS_KEY = config.AWS_ACCESS_KEY;
+var AWS_SECRET_KEY = config.AWS_SECRET_KEY;
+var S3_BUCKET = config.S3_BUCKET
 
 mongoose.connect(config.DB_URI);
 
@@ -70,6 +60,9 @@ var messages = new Schema({sender_id:String ,
 var message = mongoose.model('message', messages);
 
 ///////////////////////////////ROUTERS////////////////////////////////////////////////////////////
+
+var upload = require('./upload');
+app.use('/upload' , upload);
 
 app.get('/',function(req,res){
   res.sendFile(path.join(__dirname+'/public/templates/index.html'));

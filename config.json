@@ -12,5 +12,9 @@
 	"FAILURE_MESSAGE" : "The message does not neet specifications" ,
 	"WEBHOOK_SECRET" : "Q2LXQFD7FGTNU747EE2ZR4FT9R627AQW",
 	"TELERIVET_API_KEY" : "",
-	"DB_URI":"mongodb://root:U1299526@ds059185.mongolab.com:59185/sms_service"
+	"DB_URI":"mongodb://root:U1299526@ds059185.mongolab.com:59185/sms_service",
+	"AWS_ACCESS_KEY" : "AKIAIGJFSFQTI2WBWHLQ",
+	"AWS_SECRET_KEY" : "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",
+	"S3_BUCKET" : "sms-app-images",
+	"S3_REGION" : "us-west-2"
 }

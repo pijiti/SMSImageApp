@@ -10,7 +10,6 @@
     <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
      <script src="../angular/angular.min.js"></script>
 
-    <script src="../javascripts/index.js"></script>
   </head>
   <body ng-controller="appCtrl">
   	<!-- Angular Material requires Angular.js Libraries -->
@@ -37,16 +36,15 @@
         </div>
       </div>
       <div layout="row" ng-if="!loading" class="table-header">
-	   	<div flex="15">Id</div>
-	   	<div flex="15">Number</div>
-	   	<div flex="10">Status</div>
-	   	<div flex="20">Content</div>
-      <div flex="10">Displayed Content</div>
-	   	<div flex="10">Failure Reason</div>
-	   	<div flex="10">Time</div>
-	   	<div flex="20"> 	</div>
+  	   	<div flex="15">Id</div>
+  	   	<div flex="15">Number</div>
+  	   	<div flex="10">Status</div>
+  	   	<div flex="20">Content</div>
+        <div flex="10">Displayed Content</div>
+  	   	<div flex="10">Failure Reason</div>
+  	   	<div flex="10">Time</div>
+  	   	<div flex="20"> 	</div>
 	   </div>
-     <pre>{{query}}</pre>
     <div ng-repeat="message in messages | filter : search.query" ng-if="!loading" >
         <div layout="row" layout-align="center center" class="table-row">
       	<div flex="15">
@@ -86,5 +84,8 @@
       </div>
       <md-divider></md-divider>
       </div>
+      <script src="../javascripts/index.js"></script>
+      <script src="../javascripts/ng-file-upload-shim.js"></script>
+      <script src="../javascripts/ng-file-upload.js"></script>
   </body>
 </html>

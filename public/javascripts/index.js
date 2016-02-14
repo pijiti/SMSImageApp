@@ -1,4 +1,4 @@
-var app = angular.module('SMS_APP', ['ngMaterial']);
+var app = angular.module('SMS_APP', ['ngMaterial' , 'ngFileUpload']);
 app.controller('appCtrl' , function($scope , $http , $mdDialog , $location){
 
     $scope.loading = true;
@@ -34,3 +34,44 @@ app.controller('appCtrl' , function($scope , $http , $mdDialog , $location){
         });
     }
 });
+
+app.controller('uploadCtrl' , function($scope , $http , $mdDialog , Upload , $timeout){
+
+    $scope.loading = true;
+    var vm = this;
+    $http.get('/upload/images').then(function(response){
+        $scope.loading = false;
+        if(response && response.data){
+            $scope.images = response.data;
+        }  
+    });
+
+    vm.submit = function(){ //function to call on form submit
+        if (vm.upload_form.file.$valid && vm.file) { //check if from is valid
+            vm.upload(vm.file); //call upload function
+        }
+    }
+    
+    vm.upload = function (file) {
+        $scope.loading = true;
+        Upload.upload({
+            url: '/upload', 
+            data:{file:file} 
+        }).then(function (resp) { 
+            $scope.loading = false;
+            if(resp.data.error_code === 0){ //validate success
+                $scope.images.push(resp.data)
+            } else {
+                alert('an error occured');
+            }
+        })
+    };
+
+    $scope.delete = function(image){
+        $http.delete('/upload/images/' + image._id).then(function(response){
+            var index = $scope.images.indexOf(image);
+
+            $scope.images.splice(index , 1);
+        });
+    }
+})
