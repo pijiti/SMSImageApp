@@ -48,18 +48,18 @@ app.controller('uploadCtrl' , function($scope , $http , $mdDialog , Upload , $ti
 
     vm.submit = function(){ //function to call on form submit
         if (vm.upload_form.file.$valid && vm.file) { //check if from is valid
-            vm.upload(vm.file); //call upload function
+            vm.upload(vm.file , vm.name); //call upload function
         }
     }
     
-    vm.upload = function (file) {
+    vm.upload = function (file , name) {
         $scope.loading = true;
         Upload.upload({
             url: '/upload', 
-            data:{file:file} 
+            data:{file:file , name : name} 
         }).then(function (resp) { 
             $scope.loading = false;
-            if(resp.data.error_code === 0){ //validate success
+            if(resp && resp.status == 200){ //validate success
                 $scope.images.push(resp.data)
             } else {
                 alert('an error occured');

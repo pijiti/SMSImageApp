@@ -4,6 +4,7 @@ var multer  = require('multer')
 var router = express.Router({mergeParams: true});
 var config = require('./config.json');
 var mongoose = require('mongoose');
+var image = require('./models/image');
 
 var s3 = require('multer-s3');
 
@@ -24,14 +25,6 @@ var upload = multer({
     }
   })
 })
-
-var Schema = mongoose.Schema;
-var images = new Schema({
-                            name : String ,
-                            url : String
-                        }
-                        );
-var image = mongoose.model('image', images);
 
 router.get('/images',function(req,res){
   
@@ -64,7 +57,7 @@ router.get('/' , function(req , res , next){
 router.post('/', upload.single('file') , function (req, res, next) {
 	if(req.file){
 		var url = 'https://s3-' + S3_REGION + '.amazonaws.com/' +  S3_BUCKET + '/' + req.file.key;
-		var img = new image({url : url , name : 'Test'});
+		var img = new image({url : url , name : req.body.name.toLowerCase()});
 		img.save(function(err , data){
 		    if (err) {
 		    	console.log(err);

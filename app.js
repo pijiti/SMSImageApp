@@ -9,6 +9,7 @@ var jsonfile = require('jsonfile');
 var fs = require('fs');
 var mongoose = require('mongoose');
 var aws = require('aws-sdk');
+var image = require('./models/image');
 
 var path = require('path')
 var childProcess = require('child_process')
@@ -112,16 +113,26 @@ app.post('/webhook',
           if(checkstation(content)){
             var data = {'sender_id' : contact_id , 'sender_number' : from_number ,
                         'content' : content , 'displayed_content' : extractName(content) , 'time' : time , 'status' : 1} ;
-            AddSMS(data);
+            //AddSMS(data);
             //TODO: to redirect to wards third party javascript file
             data.station_id = getStationId(content);
             data.name = extractName(content);
-            submitForm(data);
-            res.json({
+            var image_name = extractImage(content);
+
+            image.find({name : (image_name || '').toLowerCase()} , function(err , image){
+              if(err) throw err;
+              else{
+                data.image = image;
+
+                res.json({
                 messages: [
-                        { content: config.SUCCESS_MESSAGE }
+                        { content: config.SUCCESS_MESSAGE , data : data} 
                     ]
                 });
+              }
+            })             
+            //submitForm(data);
+
           }else{
             var reason = config.FAILURE_MESSAGE ;
             var data = {'sender_id' : contact_id , 'sender_number' : from_number ,
@@ -146,7 +157,7 @@ app.post('/webhook',
                 });
         }
       }  
-      res.status(200).end();
+      //res.status(200).end();
    }
 );
 
@@ -177,7 +188,6 @@ var checkstation = function(sms){
   }
 }
 
-
 var sendsms = function(response){
   var project = tr.initProjectById(project_id);
 
@@ -194,6 +204,12 @@ var extractMessage = function(sms){
 }
 var extractName = function(sms){ 
   var msg = sms.split(" ")[2] ;
+  msg = msg.split('//')[0];
+  return msg;
+}
+var extractImage = function(sms){ 
+  var msg = sms.split(" ")[2] ;
+  msg = msg.split('//')[1];
   return msg;
 }
 var getStationId = function(sms){ 
