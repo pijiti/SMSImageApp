@@ -21,7 +21,6 @@ var app = express();
 var tr = new telerivet.API(config.TELERIVET_API_KEY);
 
 var stations = config.STATIONS;
-var file = './data.json';
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -64,6 +63,9 @@ var message = mongoose.model('message', messages);
 
 var upload = require('./upload');
 app.use('/upload' , upload);
+
+var json = require('./json');
+app.use('/json' , json);
 
 app.get('/',function(req,res){
   res.sendFile(path.join(__dirname+'/public/templates/index.html'));
@@ -119,11 +121,15 @@ app.post('/webhook',
             data.name = extractName(content);
             var image_name = extractImage(content);
 
-            image.find({name : (image_name || '').toLowerCase()} , function(err , image){
+            image.findOne({name : (image_name || '').toLowerCase()} , function(err , image){
               if(err) throw err;
               else{
                 data.image = image;
-                submitForm(data);
+                //submitForm(data);
+                var file = './' + data.station_id+'.json';
+
+                var obj = {'name':data.name , 'url' : image.url};
+                jsonfile.writeFileSync(file, obj);
                 res.json({
                 messages: [
                         { content: config.SUCCESS_MESSAGE} 
