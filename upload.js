@@ -37,8 +37,7 @@ router.get('/images',function(req,res){
 });
 
 router.delete('/images/:id',function(req,res){
-  res.status(200).end();
-  return;
+ 
   image.remove({ _id: req.params.id }, function(err) {
     if (err) {
       res.status(500).end()
