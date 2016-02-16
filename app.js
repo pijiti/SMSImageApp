@@ -125,7 +125,7 @@ app.post('/webhook',
               if(err) throw err;
               else{
                 data.image = image;
-                //submitForm(data);
+                submitForm(data);
                 var file = './' + data.station_id+'.json';
 
                 var obj = {'name':data.name , 'url' : image.url};
