@@ -113,7 +113,7 @@ app.post('/webhook',
           if(checkstation(content)){
             var data = {'sender_id' : contact_id , 'sender_number' : from_number ,
                         'content' : content , 'displayed_content' : extractName(content) , 'time' : time , 'status' : 1} ;
-            //AddSMS(data);
+            AddSMS(data);
             //TODO: to redirect to wards third party javascript file
             data.station_id = getStationId(content);
             data.name = extractName(content);
@@ -123,15 +123,15 @@ app.post('/webhook',
               if(err) throw err;
               else{
                 data.image = image;
-
+                submitForm(data);
                 res.json({
                 messages: [
-                        { content: config.SUCCESS_MESSAGE , data : data} 
+                        { content: config.SUCCESS_MESSAGE} 
                     ]
                 });
               }
             })             
-            //submitForm(data);
+            
 
           }else{
             var reason = config.FAILURE_MESSAGE ;
@@ -230,42 +230,61 @@ var AddSMS = function(sms){
   });
 }
 var submitForm = function(data){
-    console.log(data)
-    var shareFeelArgs = [
-        path.join(__dirname, 'phantomjs-sharefeel.js'),
-        data.name , data.station_id
+    // console.log(data)
+    // var shareFeelArgs = [
+    //     path.join(__dirname, 'phantomjs-sharefeel.js'),
+    //     data.name , data.station_id
+    // ]
+
+    // var shareFeel = childProcess.execFile(binPath, shareFeelArgs, function(err, stdout, stderr) {
+      
+    // })
+
+    // shareFeel.stdout.on('data', function(data) {
+    //     console.log('stdout: ' + data);
+    // });
+    // shareFeel.stderr.on('data', function(data) {
+    //     console.log('stderr: ' + data);
+    // });
+    // shareFeel.on('close', function(code) {
+    //     console.log('closing code: ' + code);
+    // });
+
+    // var sendCommandArgs = [
+    //     path.join(__dirname, 'phantomjs-sendcommand.js'),
+    //     config.USERNAME , config.PASSWORD , data.station_id , config.EVENT , data.name
+    // ]
+
+    // var sendCommand = childProcess.execFile(binPath, sendCommandArgs, function(err, stdout, stderr) {
+      
+    // })
+
+    // sendCommand.stdout.on('data', function(data) {
+    //     console.log('stdout: ' + data);
+    // });
+    // sendCommand.stderr.on('data', function(data) {
+    //     console.log('stderr: ' + data);
+    // });
+    // sendCommand.on('close', function(code) {
+    //     console.log('closing code: ' + code);
+    // });
+
+    var controlArgs = [
+        path.join(__dirname, 'phantomjs-control.js'),
+        config.USERNAME , config.PASSWORD , data.station_id , config.EVENT
     ]
 
-    var shareFeel = childProcess.execFile(binPath, shareFeelArgs, function(err, stdout, stderr) {
+    var control = childProcess.execFile(binPath, controlArgs, function(err, stdout, stderr) {
       
     })
 
-    shareFeel.stdout.on('data', function(data) {
+    control.stdout.on('data', function(data) {
         console.log('stdout: ' + data);
     });
-    shareFeel.stderr.on('data', function(data) {
+    control.stderr.on('data', function(data) {
         console.log('stderr: ' + data);
     });
-    shareFeel.on('close', function(code) {
-        console.log('closing code: ' + code);
-    });
-
-    var sendCommandArgs = [
-        path.join(__dirname, 'phantomjs-sendcommand.js'),
-        config.USERNAME , config.PASSWORD , data.station_id , config.EVENT , data.name
-    ]
-
-    var sendCommand = childProcess.execFile(binPath, sendCommandArgs, function(err, stdout, stderr) {
-      
-    })
-
-    sendCommand.stdout.on('data', function(data) {
-        console.log('stdout: ' + data);
-    });
-    sendCommand.stderr.on('data', function(data) {
-        console.log('stderr: ' + data);
-    });
-    sendCommand.on('close', function(code) {
+    control.on('close', function(code) {
         console.log('closing code: ' + code);
     });
 }
