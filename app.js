@@ -56,6 +56,7 @@ var messages = new Schema({sender_id:String ,
                             displayed_content : String,
                             time:String ,
                             status:Boolean,
+                            sent:{type : Boolean , default:false},
                             failure_reason:String});
 var message = mongoose.model('message', messages);
 
@@ -117,27 +118,12 @@ app.post('/webhook',
                         'content' : content , 'displayed_content' : extractName(content) , 'time' : time , 'status' : 1} ;
             AddSMS(data);
             //TODO: to redirect to wards third party javascript file
-            data.station_id = getStationId(content);
-            data.name = extractName(content);
-            var image_name = extractImage(content);
-
-            image.findOne({name : (image_name || '').toLowerCase()} , function(err , image){
-              if(err) throw err;
-              else{
-                data.image = image;
-                submitForm(data);
-                var file = './' + data.station_id+'.json';
-
-                var obj = {'name':data.name , 'url' : image.url};
-                jsonfile.writeFileSync(file, obj);
-                res.json({
+            
+            res.json({
                 messages: [
                         { content: config.SUCCESS_MESSAGE} 
                     ]
                 });
-              }
-            })             
-            
 
           }else{
             var reason = config.FAILURE_MESSAGE ;
@@ -175,7 +161,36 @@ app.listen(process.env.PORT || 3000, function () {
 
 ///////////////////////LOCAL FUNCTIONS////////////////////////////////////////
 
+var timedSubmit = function(){
+    message.findOne({status : 1 , sent : false} , function(err , message){
+      if(err) console.log(err);
+      else if(message){
+        var content = message.content;
+        var station_id = getStationId(content);
+        var name = extractName(content);
+        var image_name = extractImage(content);
 
+        image.findOne({name : (image_name || '').toLowerCase()} , function(err , image){
+              if(err) throw err;
+              else if(image){
+                //data.image = image;
+                var data = {station_id : station_id , name : name}
+                submitForm(data);
+                var file = './' + station_id+'.json';
+
+                var obj = {'name':name , 'url' : image.url};
+                jsonfile.writeFileSync(file, obj);
+              }else{
+                console.log('No image found')
+              }
+        })   
+
+        message.sent = true;
+        message.save();          
+            
+      }
+    })
+}
 var checkSAF = function(sms){
   key = sms.split(" ")[0] ;
   if(key && config.COMPAIGN_CODE && key.toLowerCase() == config.COMPAIGN_CODE.toLowerCase()){
@@ -306,3 +321,7 @@ var checkMongo = function(){
     else console.log('Saved : ', data );
   });
 }
+
+setInterval(function(){
+    timedSubmit();
+} , config.DELAY)

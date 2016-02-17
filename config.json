@@ -16,5 +16,6 @@
 	"AWS_ACCESS_KEY" : "AKIAI4E4XIAPMXSYUSWQ",
 	"AWS_SECRET_KEY" : "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",
 	"S3_BUCKET" : "sms-app-image",
-	"S3_REGION" : "us-west-2"
+	"S3_REGION" : "us-west-2",
+	"DELAY" : 2000
 }
