@@ -17,5 +17,8 @@
 	"AWS_SECRET_KEY" : "Oy3w21VrIK/PUQsRx3TGXUkRVG9ILCacWFMEruab",
 	"S3_BUCKET" : "sms-app-image",
 	"S3_REGION" : "us-west-2",
+	"COMPAIGN_ERROR" : "Invalid compagin code",
+	"STATION_ID_ERROR" : "Station id does not exist",
+	"IMAGE_ERROR" : "Image does not exist",
 	"DELAY" : 2000
 }

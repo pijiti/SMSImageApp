@@ -114,19 +114,35 @@ app.post('/webhook',
         // jsonfile.writeFileSync(file, obj);
         if(checkSAF(content)){
           if(checkstation(content)){
+
             var data = {'sender_id' : contact_id , 'sender_number' : from_number ,
-                        'content' : content , 'displayed_content' : extractName(content) , 'time' : time , 'status' : 1} ;
-            AddSMS(data);
+                        'content' : content , 'time' : time } ;
+            image_name = extractImage(content);
             //TODO: to redirect to wards third party javascript file
-            
-            res.json({
+            image.findOne({name : (image_name || '').toLowerCase()} , function(err , image){
+              if(err || !image){
+                data.status = 0;
+                data.failure_reason = config.IMAGE_ERROR;
+                AddSMS(data);
+                res.json({
+                messages: [
+                        { content: config.IMAGE_ERROR} 
+                    ]
+                });
+              }else{
+                data.status = 1;
+                data.displayed_content =  extractName(content)
+                AddSMS(data);
+                res.json({
                 messages: [
                         { content: config.SUCCESS_MESSAGE} 
                     ]
                 });
+              }
+            })   
 
           }else{
-            var reason = config.FAILURE_MESSAGE ;
+            var reason = config.STATION_ID_ERROR ;
             var data = {'sender_id' : contact_id , 'sender_number' : from_number ,
                         'failure_reason' : reason , 'time' : time , 'status' : 0 , 'content' : content} ;
             AddSMS(data);
@@ -137,7 +153,7 @@ app.post('/webhook',
                 });
             }
         }else{
-            var reason = config.FAILURE_MESSAGE ;
+            var reason = config.COMPAIGN_ERROR ;
             var data = {'sender_id' : contact_id , 'sender_number' : from_number ,
                         'failure_reason' : reason , 'time' : time , 'content' : content, 'status' : 0} ;
             AddSMS(data);
