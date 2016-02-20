@@ -39,6 +39,7 @@ app.controller('uploadCtrl' , function($scope , $http , $mdDialog , Upload , $ti
 
     $scope.loading = true;
     var vm = this;
+     $scope.images = [];
     $http.get('/upload/images').then(function(response){
         $scope.loading = false;
         if(response && response.data){
@@ -47,7 +48,15 @@ app.controller('uploadCtrl' , function($scope , $http , $mdDialog , Upload , $ti
     });
 
     vm.submit = function(){ //function to call on form submit
+
+        for(var i=0 ; i < $scope.images.length ; i++){
+            if($scope.images[i].name == vm.name.toLowerCase()){
+                alert("Name already exists");
+                return;
+            }
+        }
         if (vm.upload_form.file.$valid && vm.file) { //check if from is valid
+            alert("Uploading image please wait...")
             vm.upload(vm.file , vm.name); //call upload function
         }
     }
@@ -60,7 +69,8 @@ app.controller('uploadCtrl' , function($scope , $http , $mdDialog , Upload , $ti
         }).then(function (resp) { 
             $scope.loading = false;
             if(resp && resp.status == 200){ //validate success
-                $scope.images.push(resp.data)
+                $scope.images.push(resp.data);
+                alert("Image successfully uploaded.")
             } else {
                 alert('an error occured');
             }
